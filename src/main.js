@@ -18,44 +18,73 @@ if (!String.prototype.padEnd) {
   };
 }
 
+// correct answers
+const defaultAnswers = 'CBCABCBAABBACCBABCBACACABBBAACBCCABAAABBCCDBADABCDCBCADACCBABBCCDADCADBBBACAADADABADCCCABBDBBDBABBCDBDCCCACDCBADCDDADBCA';
+const examCorrectAnsweres = document.getElementById('exam-correct-answers');
+const examCorrectAnswersCounter = document.getElementById('exam-correct-answers-counter');
+const examCorrectAnswersReset = document.getElementById('exam-correct-answers-reset');
 
-const examForm = document.getElementById('exam-form');
+// responses
 const examResponses = document.getElementById('exam-responses');
 const examResponsesCounter = document.getElementById('exam-responses-counter');
+const examResponsesReset = document.getElementById('exam-responses-reset');
+
+// results
 const resultsElem = document.getElementById('results');
 
-// Handle submit btn
-examForm.addEventListener('submit', (event) => {
-  event.preventDefault();
+// Handle typing correct answers
+examCorrectAnsweres.addEventListener('input', () => {
+  examCorrectAnswersCounter.innerHTML = `There are <strong>${examCorrectAnsweres.value.length}</strong> answers`;
+});
+// Trigger the input event to show the initial count
+examCorrectAnsweres.dispatchEvent(new Event('input'));
 
-  const responses = examForm.elements['exam-responses'].value;
+// Handle reset btn
+examCorrectAnswersReset.addEventListener('click', (event) => {
+  event.preventDefault();
+  examCorrectAnsweres.value = '';
+  examCorrectAnswersCounter.innerHTML = '';
+  resultsElem.innerHTML = '';
+});
+
+// Handle typing responses
+examResponses.addEventListener('input', (e) => {
+  const responses = examResponses.value;
+  examResponsesCounter.innerHTML = `You have typed <strong>${responses.length}</strong> answers`;
+  if (!examCorrectAnsweres.value.length) return;
   const results = getResult(responses);
   resultsElem.innerHTML = `Correct answers: ${results.correctAnswers}/${results.totalAnswers}<br/>`;
 });
 
+examResponses.addEventListener('keydown', (event) => {
+  const responses = examResponses.value;
+  if (responses.length >= examCorrectAnsweres.value.length) {
+    // avoid blocking arrows, delete or backspace keys
+    if (!(event.which <= 46)) {
+      console.log('event prevented');
+      event.preventDefault();
+      examResponsesCounter.innerHTML = `You cannot have more responses than correct answers`;
+    }
+  }
+});
+
 // Handle reset btn
-examForm.addEventListener('reset', (event) => {
+examResponsesReset.addEventListener('click', (event) => {
   event.preventDefault();
-  examForm.elements['exam-responses'].value = '';
-  resultsElem.innerHTML = '';
+  examResponses.value = '';
   examResponsesCounter.innerHTML = '';
+  resultsElem.innerHTML = '';
 });
-
-// Handle typing in the form
-examResponses.addEventListener('input', () => {
-  examResponsesCounter.innerHTML = `You have typed <strong>${examResponses.value.length}</strong> answers`;
-});
-
 
 // Calculates the number of correct answers
 const getResult = (responsesStr) => {
-  const correctAnswersStr = 'CBCABCBAABBACCBABCBACACABBBAACBCCABAAABBCCDBADABCDCBCADACCBABBCCDADCADBBBACAADADABADCCCABBDBBDBABBCDBDCCCACDCBADCDDADBCA';
+  const correctAnswersStr = examCorrectAnsweres.value;
   const ansArr = correctAnswersStr.split('');
 
   // Fill the responses string with blanks
   // to match the length of the correct answers string
   if (responsesStr.length < correctAnswersStr.length) {
-    responsesStr = responsesStr.padEnd(correctAnswersStr.length, 'x');
+    responsesStr = responsesStr.padEnd(correctAnswersStr.length, '-');
   }
 
   const upperCaseResponsesStr = responsesStr.toUpperCase();
