@@ -61,7 +61,6 @@ examResponses.addEventListener('keydown', (event) => {
   if (responses.length >= examCorrectAnsweres.value.length) {
     // avoid blocking arrows, delete or backspace keys
     if (!(event.which <= 46)) {
-      console.log('event prevented');
       event.preventDefault();
       examResponsesCounter.innerHTML = `You cannot have more responses than correct answers`;
     }
