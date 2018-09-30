@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Online Exam Checker</title>
+  </head>
+
+  <body>
+    <section class="hero is-fullheight">
+      <div class="hero-head"></div>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            Correct responses:<br>
+            <span class="help">These are the 120 correct responses to the test</span>
+          </h1>
+          <div class="field">
+            <div class="control">
+              <input type="text" class="input" value="CBCABCBAABBACCBABCBACACABBBAACBCCABAAABBCCDBADABCDCBCADACCBABBCCDADCADBBBACAADADABADCCCABBDBBDBABBCDBDCCCACDCBADCDDADBCA" disabled>
+            </div>
+          </div>
+          <h1 class="title">
+            Enter exam responses:
+            <small class="help">These are the responses a student gave to the test</small>
+          </h1>
+          <form id="exam-form" autocomplete="off">
+            <div class="field">
+              <div class="control">
+                <input id="exam-responses" class="input is-primary" name="exam-responses" type="text" placeholder="Enter responses here" autocomplete="off">
+              </div>
+              <p id="exam-responses-counter" class="has-text-left"></p>
+            </div>
+            <div class="buttons is-centered">
+              <button type="submit" class="button is-primary is-medium">Submit</button>
+              <button type="reset" class="button is-primary is-medium">Reset</button>
+            </div>
+          </form>
+          <h1 class="title" id="results">
+          </h1>
+        </div>
+      </div>
+      <div class="hero-foot">
+        <p class="has-text-centered">
+            <em>&copy; Marius Lazar</em>
+        </p>
+      </div>
+    </section>
+  </body>
+
+</html>

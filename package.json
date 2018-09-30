@@ -1,7 +1,7 @@
 {
   "name": "online-test-checking",
   "version": "1.0.0",
-  "description": "",
+  "description": "A small site that helps to verify if a series of test responses are matching with the correct answers.",
   "main": "src/main.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode=development",
@@ -13,9 +13,11 @@
   },
   "keywords": [
     "html",
-    "css",
+    "scss",
     "js",
-    "webpack"
+    "webpack",
+    "bulma",
+    "netlify"
   ],
   "author": "Marius Lazar",
   "license": "MIT",
