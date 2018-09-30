@@ -56,17 +56,6 @@ examResponses.addEventListener('input', (e) => {
   resultsElem.innerHTML = `Correct answers: ${results.correctAnswers}/${results.totalAnswers}<br/>`;
 });
 
-examResponses.addEventListener('keydown', (event) => {
-  const responses = examResponses.value;
-  if (responses.length >= examCorrectAnsweres.value.length) {
-    // avoid blocking arrows, delete or backspace keys
-    if (!(event.which <= 46)) {
-      event.preventDefault();
-      examResponsesCounter.innerHTML = `You cannot have more responses than correct answers`;
-    }
-  }
-});
-
 // Handle reset btn
 examResponsesReset.addEventListener('click', (event) => {
   event.preventDefault();
@@ -78,7 +67,8 @@ examResponsesReset.addEventListener('click', (event) => {
 // Calculates the number of correct answers
 const getResult = (responsesStr) => {
   const correctAnswersStr = examCorrectAnsweres.value;
-  const ansArr = correctAnswersStr.split('');
+  const upperCaseCorrectAnswersStr = correctAnswersStr.toUpperCase();
+  const correctAnswersArr = upperCaseCorrectAnswersStr.split('');
 
   // Fill the responses string with blanks
   // to match the length of the correct answers string
@@ -87,18 +77,17 @@ const getResult = (responsesStr) => {
   }
 
   const upperCaseResponsesStr = responsesStr.toUpperCase();
-  const arr = upperCaseResponsesStr.split('');
+  const responsesArr = upperCaseResponsesStr.split('');
   let ct = 0;
-  const result = arr.map((letter, index) => {
-      if (letter === ansArr[index]) {
+  const result = responsesArr.map((letter, index) => {
+      if (letter === correctAnswersArr[index]) {
           ct++;
       }
-      return letter === ansArr[index] ? 1 : 0;
+      return letter === correctAnswersArr[index] ? 1 : 0;
   });
 
   return {
     correctAnswers: ct,
-    totalAnswers: arr.length,
-    resultsArr: result,
+    totalAnswers: correctAnswersArr.length,
   };
 }
